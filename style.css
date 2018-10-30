@@ -1,19 +1,22 @@
-html,body{
+html,
+body {
     padding: 0;
     margin: 0;
 }
-#stat-area{
+
+#stat-area {
     max-width: 700px;
     height: 50px;
     background: lightseagreen;
     margin: auto;
     text-align: center;
-    line-height: 45px;
+    line-height: 47px;
     border-radius: 0px 0px 10px 10px;
     box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+    font-size: 28px;
 }
 
-#auto-appreciation {
+#store {
     max-width: 700px;
     height: 50px;
     background: lightseagreen;
@@ -22,6 +25,9 @@ html,body{
     line-height: 45px;
     border-radius: 10px;
     box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-around;
+    font-size: 20px;
 }
 
 button {
@@ -29,13 +35,15 @@ button {
     border-radius: 10px;
     border: none;
     padding: 5px 10px;
+    height: 30px;
+    margin-top: 10px;
 }
 
-button:active{
+button:active {
     transform: translateY(2px);
 }
 
-#click-area{
+#click-area {
     margin: 50px auto;
     width: 900px;
     height: 400px;
@@ -56,39 +64,62 @@ button:active{
     filter: saturate(4);
 }
 
-.appreciator-img{
+.appreciator-img {
     width: 60px;
     height: 60px;
     position: absolute;
     left: calc(50% - 30px);
     top: 270px;
 
-   /*
+    /*
    -webkit-animation: circlejerk 4s linear infinite; /* Chrome, Safari 5 */
-      -moz-animation: circlejerk 4s linear infinite; /* Firefox 5-15 */
-        -o-animation: circlejerk 4s linear infinite; /* Opera 12+ */
-           animation: circlejerk 4s linear infinite; /* Chrome, Firefox 16+, 
+    -moz-animation: circlejerk 4s linear infinite;
+    /* Firefox 5-15 */
+    -o-animation: circlejerk 4s linear infinite;
+    /* Opera 12+ */
+    animation: circlejerk 4s linear infinite;
+    /* Chrome, Firefox 16+, 
                                                      IE 10+, Safari 5 */
-   
+
 }
 
 
 @-webkit-keyframes circlejerk {
-    from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
-    to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    from {
+        -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg);
+    }
 }
 
 @-moz-keyframes circlejerk {
-    from { -moz-transform: rotate(0deg) translateX(150px) rotate(0deg); }
-    to   { -moz-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    from {
+        -moz-transform: rotate(0deg) translateX(150px) rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(360deg) translateX(150px) rotate(-360deg);
+    }
 }
 
 @-o-keyframes circlejerk {
-    from { -o-transform: rotate(0deg) translateX(150px) rotate(0deg); }
-    to   { -o-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    from {
+        -o-transform: rotate(0deg) translateX(150px) rotate(0deg);
+    }
+
+    to {
+        -o-transform: rotate(360deg) translateX(150px) rotate(-360deg);
+    }
 }
 
 @keyframes circlejerk {
-    from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
-    to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+    from {
+        transform: rotate(0deg) translateX(150px) rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg) translateX(150px) rotate(-360deg);
+    }
 }

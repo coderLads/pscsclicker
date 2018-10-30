@@ -29,7 +29,7 @@ Vue.component("stat-area", {
 
 Vue.component("store-area", {
     template: `
-        <div id="auto-appreciation">
+        <div id="store">
             <button v-on:click="buyItem('appreciator')">Buy Student</button>
             current price: {{$root.appreciatorPrice}}
             <!-- <button v-on:click="buyItem('admin')">add coins [admin]</button> -->
