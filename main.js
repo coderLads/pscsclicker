@@ -54,7 +54,18 @@ let app = new Vue({
     data: {
         courageCoins: 0,
         appreciators: 0,
-        appreciatorPrice: 50
+        appreciatorPrice: 50,
+        events: [
+            [10, "Troubled Boy's School", (root) => {
+                root.appreciators *= (root.randomNum(8, 9) * .1);
+            }, false],
+            [20, 'Values Misaligned', (root) => {
+                root.appreciators -= 2;
+            }, false],
+            [30, 'The Drug Year', (root) => {
+                root.appreciators *= (root.randomNum(5, 9) * .1)
+            }, false]
+        ],
     },
     methods: {
         abbreviateNumber: function (value) {
@@ -74,12 +85,26 @@ let app = new Vue({
                 newValue = shortValue + suffixes[suffixNum];
             }
             return newValue;
+        },
+        randomNum(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     },
     mounted() {
         let self = this;
         setInterval(function () {
             self.courageCoins += (self.appreciators ** 2);
+
+            self.events.forEach(e => {
+                if (self.appreciators == e[0] && e[3] == false) {
+                    e[3] = true;
+                    setTimeout(() => {
+                        e[2](self);
+                        console.log(e[1]);
+                        alert(e[1]);
+                    }, Math.random() * 1000 * 30);
+                }
+            })
         }, 1000)
     },
 });
