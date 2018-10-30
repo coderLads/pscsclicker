@@ -51,6 +51,8 @@ Vue.component("store-area", {
             </div>
 
             <!-- <button v-on:click="buyItem('admin')">add coins [admin]</button> -->
+
+            <div>Most recent commit title: {{$root.recentCommit}}</div>
             
         </div>
     `,
@@ -94,6 +96,7 @@ let app = new Vue({
                 root.appreciators = Math.floor(root.appreciators * (root.randomNum(5, 9) * .1));
             }, false]
         ],
+        recentCommit: ""
     },
     methods: {
         abbreviateNumber: function (value) {
@@ -116,6 +119,15 @@ let app = new Vue({
         },
         randomNum(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
+        },
+        fetchLog() {
+            let self = this;
+            axios.get("https://cors-anywhere.herokuapp.com/" + "https://github.com/coderLads/pscsclicker/commits/master.atom").then(response => {
+                let parser = new DOMParser();
+                let xmlDoc = parser.parseFromString(response.data, "text/xml");
+                let items = xmlDoc.getElementsByTagName("entry");
+                self.recentCommit = items[0]['textContent'].split(">")[1].split("<")[0];
+            });
         }
     },
     mounted() {
@@ -133,6 +145,7 @@ let app = new Vue({
                     }, Math.random() * 1000 * 30);
                 }
             })
-        }, 1000)
+        }, 1000);
+        this.fetchLog();
     },
 });
