@@ -92,9 +92,15 @@ let app = new Vue({
             [20, 'Values Misaligned', (root) => {
                 root.appreciators -= 2;
             }, false],
-            [30, 'The Drug Year', (root) => {
+            [27, 'The Drug Year', (root) => {
                 root.appreciators = Math.floor(root.appreciators * (root.randomNum(5, 9) * .1));
-            }, false]
+            }, false],
+            [33, "Join the navy", (root) => {
+                root.appreciators -= 1;
+            }, false],
+            [40, 'The Druuug Year', (root) => {
+                root.appreciators = Math.floor(root.appreciators * (root.randomNum(5, 9) * .1));
+            }, false],
         ],
         recentCommit: ""
     },
@@ -136,7 +142,7 @@ let app = new Vue({
             self.courageCoins += (self.appreciators ** 2) + ((2 * self.teachers) * self.appreciators);
 
             self.events.forEach(e => {
-                if (self.appreciators == e[0] && e[3] == false) {
+                if (self.appreciators >= e[0] && e[3] == false) {
                     e[3] = true;
                     setTimeout(() => {
                         e[2](self);
