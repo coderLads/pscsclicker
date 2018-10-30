@@ -19,7 +19,7 @@ Vue.component("stat-area", {
     template: `
         <div id="stat-area">
             Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}
-            Current Rate: {{$root.abbreviateNumber(($root.appreciators ** 2) + (2 * $root.teachers * $root.appreciators))}} /s
+            Current Rate: {{$root.abbreviateNumber(($root.appreciators ** 2) + ((2 * $root.teachers) * $root.appreciators))}} /s
         </div>
     `
 });
@@ -121,7 +121,7 @@ let app = new Vue({
     mounted() {
         let self = this;
         setInterval(function () {
-            self.courageCoins += (self.appreciators ** 2) + (2 * self.teachers * self.appreciators);
+            self.courageCoins += (self.appreciators ** 2) + ((2 * self.teachers) * self.appreciators);
 
             self.events.forEach(e => {
                 if (self.appreciators == e[0] && e[3] == false) {
