@@ -3,7 +3,7 @@ Vue.component('click-area', {
         <div id="click-area">
             <img id="logo" src="https://i.imgur.com/Pl6SXmn.png" @click="handleClick('hand')">
             <img class="appreciator-img" src="https://i.imgur.com/CVH00Um.png" v-for="item in $root.appreciators">           
-
+            <img class="appreciator-img" src="https://i.imgur.com/X3m5Asv.png" v-for="item in $root.teachers">
         </div>
     `,
     methods: {
@@ -19,8 +19,7 @@ Vue.component("stat-area", {
     template: `
         <div id="stat-area">
             Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}
-            Current Rate: {{$root.abbreviateNumber($root.appreciators**2)}} /s
-            Students: {{$root.abbreviateNumber($root.appreciators)}}
+            Current Rate: {{$root.abbreviateNumber(($root.appreciators ** 2) + (2 * $root.teachers * $root.appreciators))}} /s
         </div>
     `
 });
@@ -28,9 +27,31 @@ Vue.component("stat-area", {
 Vue.component("store-area", {
     template: `
         <div id="store">
-            <button v-on:click="buyItem('appreciator')">Buy Student</button>
-            current price: {{$root.abbreviateNumber($root.appreciatorPrice)}}
+            <div class="store-item">
+                <div>Item</div>
+                <div>Price</div>
+                <div>Buy</div>
+                <div>Count</div>
+            </div>
+
+            <div class="store-item">
+                <div>Student</div>
+                {{$root.abbreviateNumber($root.appreciatorPrice)}}
+                <button class="active" v-if="$root.courageCoins >= $root.appreciatorPrice" v-on:click="buyItem('appreciator')">Buy</button>
+                <button v-else disabled>Buy</button>
+                {{$root.appreciators}}
+            </div>
+
+            <div class="store-item">
+                <div>Teacher</div>
+                {{$root.abbreviateNumber($root.teacherPrice)}}
+                <button class="active" v-if="$root.courageCoins >= $root.teacherPrice" v-on:click="buyItem('teacher')">Buy</button>
+                <button v-else disabled>Buy</button>
+                {{$root.teachers}}
+            </div>
+
             <!-- <button v-on:click="buyItem('admin')">add coins [admin]</button> -->
+            
         </div>
     `,
     methods: {
@@ -41,8 +62,13 @@ Vue.component("store-area", {
                     this.$root.courageCoins -= this.$root.appreciatorPrice;
                     this.$root.appreciatorPrice = Math.floor(this.$root.appreciatorPrice *= 1.35);
                 }
-            }
-            if (item == "admin") {
+            } else if (item == "teacher") {
+                if (this.$root.courageCoins >= this.$root.teacherPrice) {
+                    this.$root.teachers++;
+                    this.$root.courageCoins -= this.$root.teacherPrice;
+                    this.$root.teacherPrice = Math.floor(this.$root.teacherPrice *= 1.6);
+                }
+            } else if (item == "admin") {
                 this.$root.courageCoins += 1000;
             }
         }
@@ -54,7 +80,9 @@ let app = new Vue({
     data: {
         courageCoins: 0,
         appreciators: 0,
+        teachers: 0,
         appreciatorPrice: 50,
+        teacherPrice: 3000,
         events: [
             [10, "Troubled Boy's School", (root) => {
                 root.appreciators = Math.floor(root.appreciators * (root.randomNum(8, 9) * .1));
@@ -93,7 +121,7 @@ let app = new Vue({
     mounted() {
         let self = this;
         setInterval(function () {
-            self.courageCoins += (self.appreciators ** 2);
+            self.courageCoins += (self.appreciators ** 2) + (2 * self.teachers * self.appreciators);
 
             self.events.forEach(e => {
                 if (self.appreciators == e[0] && e[3] == false) {
