@@ -2,7 +2,7 @@ Vue.component('click-area', {
     template: `
         <div id="click-area">
             <img id="logo" src="https://i.imgur.com/Pl6SXmn.png" @click="handleClick('hand')">
-            <img class="appreciator-img" src="https://i.imgur.com/CVH00Um.png" v-for="item in $root.appreciators">           
+            <img class="appreciator-img" src="https://i.imgur.com/CVH00Um.png" v-for="item in $root.students">           
             <img class="appreciator-img" src="https://i.imgur.com/X3m5Asv.png" v-for="item in $root.teachers">
         </div>
     `,
@@ -19,7 +19,7 @@ Vue.component("stat-area", {
     template: `
         <div id="stat-area">
             Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}
-            Current Rate: {{$root.abbreviateNumber(($root.appreciators ** 2) + ((2 * $root.teachers) * $root.appreciators))}} /s
+            Current Rate: {{$root.abbreviateNumber(($root.students ** 2) + ((2 * $root.teachers) * $root.students))}} /s
         </div>
     `
 });
@@ -36,10 +36,10 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Student</div>
-                {{$root.abbreviateNumber($root.appreciatorPrice)}}
-                <button class="active" v-if="$root.courageCoins >= $root.appreciatorPrice" v-on:click="buyItem('appreciator')">Buy</button>
+                {{$root.abbreviateNumber($root.studentPrice)}}
+                <button class="active" v-if="$root.courageCoins >= $root.studentPrice" v-on:click="buyItem('student')">Buy</button>
                 <button v-else disabled>Buy</button>
-                {{$root.appreciators}}
+                {{$root.students}}
             </div>
 
             <div class="store-item">
@@ -52,26 +52,27 @@ Vue.component("store-area", {
 
             <!-- <button v-on:click="buyItem('admin')">add coins [admin]</button> -->
 
-            <div>Most recent commit title: {{$root.recentCommit}}</div>
+            <div>Recent update: {{$root.recentCommit}}</div>
             
         </div>
     `,
     methods: {
         buyItem(item) {
-            if (item == "appreciator") {
-                if (this.$root.courageCoins >= this.$root.appreciatorPrice) {
-                    this.$root.appreciators++;
-                    this.$root.courageCoins -= this.$root.appreciatorPrice;
-                    this.$root.appreciatorPrice = Math.floor(this.$root.appreciatorPrice *= 1.35);
+            let self = this.$root;
+            if (item == "student") {
+                if (self.courageCoins >= self.studentPrice) {
+                    self.students++;
+                    self.courageCoins -= self.studentPrice;
+                    self.studentPrice = Math.floor(self.studentPrice *= 1.35);
                 }
             } else if (item == "teacher") {
-                if (this.$root.courageCoins >= this.$root.teacherPrice) {
-                    this.$root.teachers++;
-                    this.$root.courageCoins -= this.$root.teacherPrice;
-                    this.$root.teacherPrice = Math.floor(this.$root.teacherPrice *= 1.6);
+                if (self.courageCoins >= self.teacherPrice) {
+                    self.teachers++;
+                    self.courageCoins -= self.teacherPrice;
+                    self.teacherPrice = Math.floor(self.teacherPrice *= 1.6);
                 }
             } else if (item == "admin") {
-                this.$root.courageCoins += 1000;
+                self.courageCoins += 1000;
             }
         }
     }
@@ -81,25 +82,25 @@ let app = new Vue({
     el: "#app",
     data: {
         courageCoins: 0,
-        appreciators: 0,
+        students: 0,
         teachers: 0,
-        appreciatorPrice: 50,
+        studentPrice: 50,
         teacherPrice: 3000,
         events: [
             [10, "Troubled Boy's School", (root) => {
-                root.appreciators = Math.floor(root.appreciators * (root.randomNum(8, 9) * .1));
+                root.students = Math.floor(root.students * (root.randomNum(8, 9) * .1));
             }, false],
             [20, 'Values Misaligned', (root) => {
-                root.appreciators -= 2;
+                root.students -= 2;
             }, false],
             [27, 'The Drug Year', (root) => {
-                root.appreciators = Math.floor(root.appreciators * (root.randomNum(5, 9) * .1));
+                root.students = Math.floor(root.students * (root.randomNum(5, 9) * .1));
             }, false],
             [33, "Join the navy", (root) => {
-                root.appreciators -= 1;
+                root.students -= 1;
             }, false],
             [40, 'The Druuug Year', (root) => {
-                root.appreciators = Math.floor(root.appreciators * (root.randomNum(5, 9) * .1));
+                root.students = Math.floor(root.students * (root.randomNum(7, 9) * .1));
             }, false],
         ],
         recentCommit: ""
@@ -138,17 +139,21 @@ let app = new Vue({
     },
     mounted() {
         let self = this;
+        let currentStudents;
+        let eventString;
         setInterval(function () {
-            self.courageCoins += (self.appreciators ** 2) + ((2 * self.teachers) * self.appreciators);
+            self.courageCoins += (self.students ** 2) + ((2 * self.teachers) * self.students);
 
             self.events.forEach(e => {
-                if (self.appreciators >= e[0] && e[3] == false) {
+                if (self.students >= e[0] && e[3] == false) {
                     e[3] = true;
                     setTimeout(() => {
+                        currentStudents = self.students;
                         e[2](self);
-                        console.log(e[1]);
-                        alert(e[1]);
-                    }, Math.random() * 1000 * 30);
+                        eventString = ("The event: " + e[1] + " occurred, you lost " + (currentStudents - self.students) + " students");
+                        console.log(eventString);
+                        alert(eventString);
+                    }, Math.random() * 1000 * 120);
                 }
             })
         }, 1000);
