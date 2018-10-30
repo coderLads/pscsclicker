@@ -57,13 +57,13 @@ let app = new Vue({
         appreciatorPrice: 50,
         events: [
             [10, "Troubled Boy's School", (root) => {
-                root.appreciators *= (root.randomNum(8, 9) * .1);
+                root.appreciators = Math.floor(root.appreciators * (root.randomNum(8, 9) * .1));
             }, false],
             [20, 'Values Misaligned', (root) => {
                 root.appreciators -= 2;
             }, false],
             [30, 'The Drug Year', (root) => {
-                root.appreciators *= (root.randomNum(5, 9) * .1)
+                root.appreciators = Math.floor(root.appreciators * (root.randomNum(5, 9) * .1));
             }, false]
         ],
     },
