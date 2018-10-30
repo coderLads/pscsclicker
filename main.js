@@ -52,7 +52,7 @@ Vue.component("store-area", {
 
             <!-- <button v-on:click="buyItem('admin')">add coins [admin]</button> -->
 
-            <div id="updates">Recent update: {{$root.recentCommit}}</div>
+            <div v-if="$root.recentCommit" id="updates">Recent update: {{$root.recentCommit}}</div>
             
         </div>
     `,
