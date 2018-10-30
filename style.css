@@ -1,0 +1,94 @@
+html,body{
+    padding: 0;
+    margin: 0;
+}
+#stat-area{
+    max-width: 700px;
+    height: 50px;
+    background: lightseagreen;
+    margin: auto;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+#auto-appreciation {
+    max-width: 700px;
+    height: 50px;
+    background: lightseagreen;
+    margin: auto;
+    text-align: center;
+    line-height: 45px;
+    border-radius: 10px;
+    box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+button {
+    background: lightgreen;
+    border-radius: 10px;
+    border: none;
+    padding: 5px 10px;
+}
+
+button:active{
+    transform: translateY(2px);
+}
+
+#click-area{
+    margin: 50px auto;
+    width: 900px;
+    height: 400px;
+    background: lightblue;
+    border-radius: 10px;
+    box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+}
+
+#logo {
+    width: 100px;
+    position: relative;
+    top: calc(50% - 60px);
+    left: calc(50% - 50px);
+}
+
+#logo:active {
+    transform: translateY(2px);
+    filter: saturate(4);
+}
+
+.appreciator-img{
+    width: 60px;
+    height: 60px;
+    position: absolute;
+    left: calc(50% - 30px);
+    top: 270px;
+
+   /*
+   -webkit-animation: circlejerk 4s linear infinite; /* Chrome, Safari 5 */
+      -moz-animation: circlejerk 4s linear infinite; /* Firefox 5-15 */
+        -o-animation: circlejerk 4s linear infinite; /* Opera 12+ */
+           animation: circlejerk 4s linear infinite; /* Chrome, Firefox 16+, 
+                                                     IE 10+, Safari 5 */
+   
+}
+
+
+@-webkit-keyframes circlejerk {
+    from { -webkit-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { -webkit-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
+@-moz-keyframes circlejerk {
+    from { -moz-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { -moz-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
+@-o-keyframes circlejerk {
+    from { -o-transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { -o-transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
+
+@keyframes circlejerk {
+    from { transform: rotate(0deg) translateX(150px) rotate(0deg); }
+    to   { transform: rotate(360deg) translateX(150px) rotate(-360deg); }
+}
