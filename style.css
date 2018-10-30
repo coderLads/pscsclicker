@@ -19,6 +19,8 @@ body {
     border-radius: 0px 0px 10px 10px;
     box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
     font-size: 24px;
+    display: flex;
+    justify-content: space-evenly;
 }
 
 #store {

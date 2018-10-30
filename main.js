@@ -18,8 +18,8 @@ Vue.component('click-area', {
 Vue.component("stat-area", {
     template: `
         <div id="stat-area">
-            Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}
-            Current Rate: {{$root.abbreviateNumber(($root.students ** 2) + ((2 * $root.teachers) * $root.students))}} /s
+            <div>Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}</div>
+            <div>Current Rate: {{$root.abbreviateNumber(($root.students ** 2) + ((2 * $root.teachers) * $root.students))}} /s</div>
         </div>
     `
 });
