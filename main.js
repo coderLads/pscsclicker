@@ -19,7 +19,7 @@ Vue.component("stat-area", {
     template: `
         <div id="stat-area">
             <div>Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}</div>
-            <div>Current Rate: {{$root.abbreviateNumber(($root.students ** 2) + ((2 * $root.teachers) * $root.students))}} /s</div>
+            <div>Current Rate: {{$root.abbreviateNumber(($root.students ** 2) + ((4 * $root.teachers) * $root.students))}} /s</div>
         </div>
     `
 });
@@ -63,13 +63,13 @@ Vue.component("store-area", {
                 if (self.courageCoins >= self.studentPrice) {
                     self.students++;
                     self.courageCoins -= self.studentPrice;
-                    self.studentPrice = Math.floor(self.studentPrice *= 1.35);
+                    self.studentPrice = Math.floor(self.studentPrice *= 1.5);
                 }
             } else if (item == "teacher") {
                 if (self.courageCoins >= self.teacherPrice) {
                     self.teachers++;
                     self.courageCoins -= self.teacherPrice;
-                    self.teacherPrice = Math.floor(self.teacherPrice *= 1.6);
+                    self.teacherPrice = Math.floor(self.teacherPrice *= 2.1);
                 }
             } else if (item == "admin") {
                 self.courageCoins += 1000;
@@ -142,7 +142,7 @@ let app = new Vue({
         let currentStudents;
         let eventString;
         setInterval(function () {
-            self.courageCoins += (self.students ** 2) + ((2 * self.teachers) * self.students);
+            self.courageCoins += (self.students ** 2) + ((4 * self.teachers) * self.students);
 
             self.events.forEach(e => {
                 if (self.students >= e[0] && e[3] == false) {
