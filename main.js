@@ -1,6 +1,6 @@
 Vue.component('click-area', {
     template: `
-        <div id="click-area">
+        <div id="click-area" :style="{backgroundImage: 'url(' + $root.locationImages[$root.locations] + ')' }">
             <img id="logo" src="https://i.imgur.com/Pl6SXmn.png" @click="handleClick('hand')">
             <img class="appreciator-img" src="https://i.imgur.com/CVH00Um.png" v-for="item in $root.students">           
             <img class="appreciator-img" src="https://i.imgur.com/X3m5Asv.png" v-for="item in $root.teachers">
@@ -19,7 +19,8 @@ Vue.component("stat-area", {
     template: `
         <div id="stat-area">
             <div>Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}</div>
-            <div>Current Rate: {{$root.abbreviateNumber(($root.students ** 2) + ((4 * $root.teachers) * $root.students))}} /s</div>
+            <div>Current Rate: {{$root.abbreviateNumber(Math.floor((($root.students ** 2) + ((4 * $root.teachers) * $root.students)) * ($root.locations + 1)))}} /s</div>
+            <div id="mutiplier" v-if="$root.multiplier != 1">X{{$root.multiplier}}!</div>
         </div>
     `
 });
@@ -50,7 +51,13 @@ Vue.component("store-area", {
                 {{$root.teachers}}
             </div>
 
-            <!-- <button v-on:click="buyItem('admin')">add coins [admin]</button> -->
+            <div class="store-item">
+                <div>Location</div>
+                {{$root.abbreviateNumber($root.locationPrice)}}
+                <button class="active" v-if="$root.courageCoins >= $root.locationPrice" v-on:click="buyItem('location')">Buy</button>
+                <button v-else disabled>Buy</button>
+                {{$root.locations}}
+            </div>
 
             <div v-if="$root.recentCommit" id="updates">Recent update: {{$root.recentCommit}}</div>
             
@@ -71,12 +78,24 @@ Vue.component("store-area", {
                     self.courageCoins -= self.teacherPrice;
                     self.teacherPrice = Math.floor(self.teacherPrice *= 2.1);
                 }
-            } else if (item == "admin") {
-                self.courageCoins += 1000;
+            } else if (item == "location") {
+                if (self.courageCoins >= self.locationPrice) {
+                    self.locations++;
+                    self.courageCoins -= self.locationPrice;
+                    self.locationPrice = Math.floor(self.locationPrice *= 10.4);
+                }
             }
         }
     }
-})
+});
+
+Vue.component("news-area", {
+    template: `
+        <div id="news">
+            <p v-if="$root.message">{{$root.message}}</p>
+        </div>
+    `,
+});
 
 let app = new Vue({
     el: "#app",
@@ -84,26 +103,42 @@ let app = new Vue({
         courageCoins: 0,
         students: 0,
         teachers: 0,
+        locations: 0,
         studentPrice: 50,
         teacherPrice: 3000,
+        locationPrice: 10000,
+        multiplier: 1,
+        recentCommit: "",
+        message: "",
         events: [
-            [10, "Troubled Boy's School", (root) => {
+            [10, 700, "Troubled Boy's School", (root) => {
                 root.students = Math.floor(root.students * (root.randomNum(8, 9) * .1));
             }, false],
-            [20, 'Values Misaligned', (root) => {
+            [20, 100, 'Values Misaligned', (root) => {
                 root.students -= 2;
             }, false],
-            [27, 'The Drug Year', (root) => {
+            [27, 10000, 'The Drug Year', (root) => {
                 root.students = Math.floor(root.students * (root.randomNum(5, 9) * .1));
             }, false],
-            [33, "Join the navy", (root) => {
+            [30, 20, 'Steve Miranda Visited! Profits x 2 for 30 seconds!', (root) => {
+                root.multiplier = 3;
+                setTimeout(function () {
+                    root.multiplier = 1;
+                }, 60000);
+            }, false],
+            [33, 100000, "Join the navy", (root) => {
                 root.students -= 1;
             }, false],
-            [40, 'The Druuug Year', (root) => {
+            [40, 1000, 'The Druuug Year', (root) => {
                 root.students = Math.floor(root.students * (root.randomNum(7, 9) * .1));
             }, false],
         ],
-        recentCommit: ""
+        locationImages: [
+            "https://i.imgur.com/8UzGSfU.jpg",
+            "https://i.imgur.com/sWNhfp1.jpg",
+            "https://i.imgur.com/V7VBReW.png",
+        ]
+
     },
     methods: {
         abbreviateNumber: function (value) {
@@ -142,18 +177,23 @@ let app = new Vue({
         let currentStudents;
         let eventString;
         setInterval(function () {
-            self.courageCoins += (self.students ** 2) + ((4 * self.teachers) * self.students);
+            self.courageCoins += Math.floor(((self.students ** 2) + ((4 * self.teachers) * self.students)) * (self.locations + 1) * (self.multiplier));
 
             self.events.forEach(e => {
-                if (self.students >= e[0] && e[3] == false) {
-                    e[3] = true;
-                    setTimeout(() => {
-                        currentStudents = self.students;
-                        e[2](self);
-                        eventString = ("The event: " + e[1] + " occurred, you lost " + (currentStudents - self.students) + " students");
-                        console.log(eventString);
-                        alert(eventString);
-                    }, Math.random() * 1000 * 120);
+                if (self.students >= e[0] && e[4] == false) {
+                    if (self.randomNum(1, e[1]) == 1) {
+                        e[4] = true;
+                        setTimeout(() => {
+                            currentStudents = self.students;
+                            e[3](self);
+                            eventString = ("The event: " + e[2]);
+                            if (currentStudents - self.students == 0) eventString += (" you lost " + (currentStudents - self.students) + " students");
+                            self.message = eventString;
+                            setTimeout(() => {
+                                self.message = "";
+                            }, 30000);
+                        }, Math.random() * 1000 * 60);
+                    }
                 }
             })
         }, 1000);

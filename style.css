@@ -1,8 +1,10 @@
+@import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+
 html,
 body {
     padding: 0;
     margin: 0;
-    font-family: 'Nunito', sans-serif;
+    font-family: 'Montserrat', sans-serif;
     background-image: linear-gradient(109.6deg, rgba(137, 191, 221, 1) 11.2%, rgba(150, 144, 204, 1) 100.2%);
     color: white;
     height: 100%;
@@ -64,10 +66,12 @@ button {
     margin: 50px auto;
     width: 900px;
     height: 400px;
-    /* background-image: linear-gradient(109.6deg, rgba(137, 191, 221, 1) 11.2%, rgba(150, 144, 204, 1) 100.2%); */
     background: rgba(255, 255, 255, .2);
     border-radius: 10px;
     box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 #updates {
@@ -100,11 +104,9 @@ button {
     -o-animation: circlejerk 4s linear infinite;
     /* Opera 12+ */
     animation: circlejerk 4s linear infinite;
-    /* Chrome, Firefox 16+, 
-                                                     IE 10+, Safari 5 */
+    /* Chrome, Firefox 16+,                                                 IE 10+, Safari 5 */
 
 }
-
 
 @-webkit-keyframes circlejerk {
     from {
@@ -143,5 +145,38 @@ button {
 
     to {
         transform: rotate(360deg) translateX(150px) rotate(-360deg);
+    }
+}
+
+#news {
+    background-color: tomato;
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    height: 50px;
+    border-radius: 10px;
+    box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+    font-size: 24px;
+    line-height: 4px;
+    max-width: 700px;
+    margin: auto;
+    margin-top: auto;
+    margin-top: 40px;
+}
+
+#news p {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 15s linear infinite;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(-100%, 0);
     }
 }
