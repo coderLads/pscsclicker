@@ -99,8 +99,8 @@ Vue.component("news-area", {
 Vue.component("link-area", {
     template: `
         <div id="links">
-            <a href="https://github.com/coderLads/pscsclicker">GitHub</a>
-            <a href="https://github.com/coderLads/pscsclicker/issues/new">Submit an issue</a>
+            <a target="_blank" href="https://github.com/coderLads/pscsclicker">GitHub</a>
+            <a target="_blank" href="https://github.com/coderLads/pscsclicker/issues/new">Submit an issue</a>
         </div>
     `,
 });
