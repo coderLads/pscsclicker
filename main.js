@@ -58,7 +58,7 @@ Vue.component("store-area", {
                 {{$root.locations}}
             </div>
 
-            <div v-if="$root.recentCommit" id="updates">Recent update: {{$root.recentCommit}}</div>
+            <!-- <div v-if="$root.recentCommit" id="updates">Recent update: {{$root.recentCommit}}</div> -->
             
         </div>
     `,
@@ -92,6 +92,15 @@ Vue.component("news-area", {
     template: `
         <div id="news">
             <p v-if="$root.message">{{$root.message}}</p>
+        </div>
+    `,
+});
+
+Vue.component("link-area", {
+    template: `
+        <div id="links">
+            <a href="https://github.com/coderLads/pscsclicker">GitHub</a>
+            <a href="https://github.com/coderLads/pscsclicker/issues/new">Submit an issue</a>
         </div>
     `,
 });
@@ -203,6 +212,6 @@ let app = new Vue({
                 }
             })
         }, 1000);
-        this.fetchLog();
+        // this.fetchLog();
     },
 });

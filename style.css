@@ -44,18 +44,23 @@ body {
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
+.store-item:not(:first-child):hover {
+    background: rgba(255, 255, 255, .2);
+}
+
 button {
     background: palegreen;
     border-radius: 10px;
     border: none;
     padding: 5px 10px;
     height: 30px;
-    margin-top: 10px;
+    margin-top: 7.5px;
     transition: background ease 1s;
 }
 
 .active {
-    filter: saturate(2);
+    filter: saturate(1.5);
+    cursor: pointer;
 }
 
 .active:active {
@@ -63,7 +68,7 @@ button {
 }
 
 #click-area {
-    margin: 50px auto;
+    margin: 30px auto;
     width: 900px;
     height: 400px;
     background: rgba(255, 255, 255, .2);
@@ -161,8 +166,7 @@ button {
     line-height: 4px;
     max-width: 700px;
     margin: auto;
-    margin-top: auto;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
 #news p {
@@ -179,4 +183,24 @@ button {
     100% {
         transform: translate(-100%, 0);
     }
+}
+
+#links {
+    max-width: 700px;
+    background: rgba(255, 255, 255, .2);
+    margin: auto;
+    margin-top: 30px;
+    text-align: center;
+    font-size: 20px;
+    line-height: 45px;
+    border-radius: 10px;
+    box-shadow: 2px 6px 30px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
+
+#links>a {
+    color: white;
+    text-decoration: none;
 }
