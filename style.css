@@ -103,7 +103,7 @@ button {
     height: 60px;
     position: absolute;
     left: calc(50% - 30px);
-    top: 270px;
+    top: 250px;
 
     /*
    -webkit-animation: circlejerk 4s linear infinite; /* Chrome, Safari 5 */
