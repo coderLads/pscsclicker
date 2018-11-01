@@ -42,6 +42,7 @@ body {
 .store-item {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
+    transition: background ease .2s;
 }
 
 .store-item:not(:first-child):hover {
@@ -88,11 +89,13 @@ button {
     position: relative;
     top: calc(50% - 60px);
     left: calc(50% - 50px);
+    cursor: grab;
 }
 
 #logo:active {
     transform: translateY(2px);
     filter: saturate(4);
+    cursor: grabbing;
 }
 
 .appreciator-img {
