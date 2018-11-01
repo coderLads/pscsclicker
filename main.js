@@ -9,7 +9,7 @@ Vue.component('click-area', {
     methods: {
         handleClick(status) {
             if (status == "hand") {
-                this.$root.courageCoins++;
+                this.$root.courageCoins += Math.floor(this.$root.rate(this.$root) / 5) + 1;
             }
         }
     }
@@ -19,8 +19,7 @@ Vue.component("stat-area", {
     template: `
         <div id="stat-area">
             <div>Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}</div>
-            <div>Current Rate: {{$root.abbreviateNumber(Math.floor((($root.students ** 2) + ((4 * $root.teachers) * $root.students)) * ($root.locations + 1)))}} /s</div>
-            <div id="mutiplier" v-if="$root.multiplier != 1">X{{$root.multiplier}}!</div>
+            <div>Current Rate: {{$root.abbreviateNumber($root.rate($root))}} /s</div>
         </div>
     `
 });
@@ -120,7 +119,7 @@ let app = new Vue({
             [27, 10000, 'The Drug Year', (root) => {
                 root.students = Math.floor(root.students * (root.randomNum(5, 9) * .1));
             }, false],
-            [30, 20, 'Steve Miranda Visited! Profits x 2 for 30 seconds!', (root) => {
+            [30, 20, 'Steve Miranda Visited! Profits x 3 for 60 seconds!', (root) => {
                 root.multiplier = 3;
                 setTimeout(function () {
                     root.multiplier = 1;
@@ -170,6 +169,9 @@ let app = new Vue({
                 let items = xmlDoc.getElementsByTagName("entry");
                 self.recentCommit = items[0]['textContent'].split(">")[1].split("<")[0];
             });
+        },
+        rate: (self) => {
+            return Math.floor((((self.students ** 2) + ((4 * self.teachers) * self.students)) * (self.locations + 1)) * self.multiplier)
         }
     },
     mounted() {
@@ -177,8 +179,7 @@ let app = new Vue({
         let currentStudents;
         let eventString;
         setInterval(function () {
-            self.courageCoins += Math.floor(((self.students ** 2) + ((4 * self.teachers) * self.students)) * (self.locations + 1) * (self.multiplier));
-
+            self.courageCoins += self.rate(self);
             self.events.forEach(e => {
                 if (self.students >= e[0] && e[4] == false) {
                     if (self.randomNum(1, e[1]) == 1) {
@@ -187,7 +188,9 @@ let app = new Vue({
                             currentStudents = self.students;
                             e[3](self);
                             eventString = ("The event: " + e[2]);
-                            if (currentStudents - self.students == 0) eventString += (" you lost " + (currentStudents - self.students) + " students");
+                            if ((currentStudents - self.students != 0)) {
+                                eventString += (" you lost " + (currentStudents - self.students) + " students");
+                            }
                             self.message = eventString;
                             setTimeout(() => {
                                 self.message = "";

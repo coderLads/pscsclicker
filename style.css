@@ -45,7 +45,7 @@ body {
 }
 
 button {
-    background: lightgreen;
+    background: palegreen;
     border-radius: 10px;
     border: none;
     padding: 5px 10px;
@@ -55,7 +55,7 @@ button {
 }
 
 .active {
-    filter: saturate(1.4);
+    filter: saturate(2);
 }
 
 .active:active {
