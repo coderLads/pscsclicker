@@ -136,6 +136,9 @@ let app = new Vue({
             "https://i.imgur.com/8UzGSfU.jpg",
             "https://i.imgur.com/sWNhfp1.jpg",
             "https://i.imgur.com/V7VBReW.png",
+            "https://i.imgur.com/SfoiGrH.png",
+            "https://i.imgur.com/nW1hmpt.png",
+            "https://i.imgur.com/Bi3cbWd.png"
         ]
 
     },
