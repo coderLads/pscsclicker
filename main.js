@@ -18,8 +18,8 @@ Vue.component('click-area', {
 Vue.component("stat-area", {
     template: `
         <div id="stat-area">
-            <div>Courage Coins: {{$root.abbreviateNumber($root.courageCoins)}}</div>
-            <div>Current Rate: {{$root.abbreviateNumber($root.rate($root))}} /s</div>
+            <div>Courage Coins: {{abbreviateNumber($root.courageCoins)}}</div>
+            <div>Current Rate: {{abbreviateNumber($root.rate($root))}} /s</div>
         </div>
     `
 });
@@ -36,7 +36,7 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Student</div>
-                {{$root.abbreviateNumber($root.studentPrice)}}
+                {{abbreviateNumber($root.studentPrice)}}
                 <button class="active" v-if="$root.courageCoins >= $root.studentPrice" v-on:click="buyItem('student')">Buy</button>
                 <button v-else disabled>Buy</button>
                 {{$root.students}}
@@ -44,7 +44,7 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Teacher</div>
-                {{$root.abbreviateNumber($root.teacherPrice)}}
+                {{abbreviateNumber($root.teacherPrice)}}
                 <button class="active" v-if="$root.courageCoins >= $root.teacherPrice" v-on:click="buyItem('teacher')">Buy</button>
                 <button v-else disabled>Buy</button>
                 {{$root.teachers}}
@@ -52,7 +52,7 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Location</div>
-                {{$root.abbreviateNumber($root.locationPrice)}}
+                {{abbreviateNumber($root.locationPrice)}}
                 <button class="active" v-if="$root.courageCoins >= $root.locationPrice" v-on:click="buyItem('location')">Buy</button>
                 <button v-else disabled>Buy</button>
                 {{$root.locations}}
@@ -92,18 +92,6 @@ Vue.component("news-area", {
     template: `
         <div id="news">
             <p v-if="$root.message">{{$root.message}}</p>
-        </div>
-    `,
-});
-
-Vue.component("link-area", {
-    template: `
-        <div id="links">
-            <a target="_blank" href="https://github.com/coderLads/pscsclicker">GitHub</a>
-            <a target="_blank" href="https://github.com/coderLads/pscsclicker/issues/new">Submit an issue</a>
-            <button class="active" @click="$root.save()">Save</button>
-            <!-- <button class="active" @click="$root.load()">Load</button> -->
-            <button class="active" @click="$root.clear()">Reset</button>
         </div>
     `,
 });
@@ -155,24 +143,6 @@ let app = new Vue({
         resetTime: false,
     },
     methods: {
-        abbreviateNumber: function (value) {
-            let newValue = value;
-            if (value >= 1000) {
-                let suffixes = ["", "k", "m", "b", "t"];
-                let suffixNum = Math.floor(("" + value).length / 3);
-                let shortValue = '';
-                for (let precision = 2; precision >= 1; precision--) {
-                    shortValue = parseFloat((suffixNum != 0 ? (value / Math.pow(1000, suffixNum)) : value).toPrecision(precision));
-                    let dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g, '');
-                    if (dotLessShortValue.length <= 2) {
-                        break;
-                    }
-                }
-                if (shortValue % 1 != 0) shortNum = shortValue.toFixed(1);
-                newValue = shortValue + suffixes[suffixNum];
-            }
-            return newValue;
-        },
         randomNum(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         },
@@ -187,53 +157,12 @@ let app = new Vue({
         },
         rate: (self) => {
             return Math.floor((((self.students ** 2) + ((4 * self.teachers) * self.students)) * (self.locations + 1)) * self.multiplier);
-        },
-        save() {
-            let saveData = [this.courageCoins, this.students, this.teachers, this.locations, this.studentPrice, this.teacherPrice, this.locationPrice, this.multiplier];
-            console.log(saveData);
-            Cookies.set('saveData', saveData, {
-                expires: 365,
-                path: ''
-            });
-        },
-        load() {
-            if (Cookies.get('saveData')) {
-                let saveData = Cookies.get('saveData').split("[")[1].split("]")[0].split(",").map(x => {
-                    return parseInt(x, 10);
-                });
-                this.courageCoins = saveData[0]
-                this.students = saveData[1];
-                this.teachers = saveData[2];
-                this.locations = saveData[3];
-                this.studentPrice = saveData[4];
-                this.teacherPrice = saveData[5];
-                this.locationPrice = saveData[6];
-                this.multiplier = saveData[7];
-            }
-        },
-        clear() {
-            Cookies.remove('saveData', {
-                path: ''
-            });
-            this.resetTime = true;
-            location.reload();
         }
     },
     mounted() {
         let self = this;
-        window.addEventListener("beforeunload", function (e) {
-            if (!self.resetTime) {
-                var confirmationMessage = "\o/";
-                self.save();
-                (e || window.event).returnValue = confirmationMessage;
-                return confirmationMessage;
-            }
-        });
-
         let currentStudents;
         let eventString;
-
-        self.load();
 
         setInterval(function () {
             self.courageCoins += self.rate(self);

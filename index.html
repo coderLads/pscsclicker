@@ -17,8 +17,13 @@
     <link id='favicon' rel="icon" type="image/jpg" href="img/icon.jpg" />
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js" defer></script> -->
+
+    <!-- firebase stuff should go here -->
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js" defer></script>
+    <script src="scripts.js"></script>
     <script src="main.js" defer></script>
 
 </head>
@@ -30,11 +35,12 @@
         <click-area></click-area>
         <store-area></store-area>
         <news-area></news-area>
-        <link-area></link-area>
+        <div id="links">
+            <a target="_blank" href="https://github.com/coderLads/pscsclicker">GitHub</a>
+            <a target="_blank" href="https://github.com/coderLads/pscsclicker/issues/new">Submit an issue</a>
+        </div>
     </div>
 
 </body>
-
-
 
 </html>
