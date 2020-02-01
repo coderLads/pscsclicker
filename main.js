@@ -18,8 +18,8 @@ Vue.component('click-area', {
 Vue.component("stat-area", {
     template: `
         <div id="stat-area">
-            <div>Courage Coins: {{abbreviateNumber($root.courageCoins)}}</div>
-            <div>Current Rate: {{abbreviateNumber($root.rate($root))}} /s</div>
+            <div>Courage Coins: {{this.$root.abbreviateNumber($root.courageCoins)}}</div>
+            <div>Current Rate: {{this.$root.abbreviateNumber($root.rate($root))}} /s</div>
         </div>
     `
 });
@@ -36,7 +36,7 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Student</div>
-                {{abbreviateNumber($root.studentPrice)}}
+                {{this.$root.abbreviateNumber($root.studentPrice)}}
                 <button class="active" v-if="$root.courageCoins >= $root.studentPrice" v-on:click="buyItem('student')">Buy</button>
                 <button v-else disabled>Buy</button>
                 {{$root.students}}
@@ -44,7 +44,7 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Teacher</div>
-                {{abbreviateNumber($root.teacherPrice)}}
+                {{this.$root.abbreviateNumber($root.teacherPrice)}}
                 <button class="active" v-if="$root.courageCoins >= $root.teacherPrice" v-on:click="buyItem('teacher')">Buy</button>
                 <button v-else disabled>Buy</button>
                 {{$root.teachers}}
@@ -52,7 +52,7 @@ Vue.component("store-area", {
 
             <div class="store-item">
                 <div>Location</div>
-                {{abbreviateNumber($root.locationPrice)}}
+                {{this.$root.abbreviateNumber($root.locationPrice)}}
                 <button class="active" v-if="$root.courageCoins >= $root.locationPrice" v-on:click="buyItem('location')">Buy</button>
                 <button v-else disabled>Buy</button>
                 {{$root.locations}}
@@ -157,6 +157,24 @@ let app = new Vue({
         },
         rate: (self) => {
             return Math.floor((((self.students ** 2) + ((4 * self.teachers) * self.students)) * (self.locations + 1)) * self.multiplier);
+        },
+        abbreviateNumber(value) {
+            let newValue = value;
+            if (value >= 1000) {
+                let suffixes = ["", "k", "m", "b", "t"];
+                let suffixNum = Math.floor(("" + value).length / 3);
+                let shortValue = '';
+                for (let precision = 2; precision >= 1; precision--) {
+                    shortValue = parseFloat((suffixNum != 0 ? (value / Math.pow(1000, suffixNum)) : value).toPrecision(precision));
+                    let dotLessShortValue = (shortValue + '').replace(/[^a-zA-Z 0-9]+/g, '');
+                    if (dotLessShortValue.length <= 2) {
+                        break;
+                    }
+                }
+                if (shortValue % 1 != 0) shortNum = shortValue.toFixed(1);
+                newValue = shortValue + suffixes[suffixNum];
+            }
+            return newValue;
         }
     },
     mounted() {
