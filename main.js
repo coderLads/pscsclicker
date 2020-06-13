@@ -1,6 +1,6 @@
 Vue.component('click-area', {
     template: `
-        <div id="click-area" :style="{backgroundImage: 'url(' + $root.locationImages[$root.locations] + ')' }">
+        <div id="click-area" :style="{backgroundImage: $root.locationImages[$root.locations] }">
             <img id="logo" src="img/appreciation.png" @click="handleClick('hand')">
             <img class="appreciator-img" src="img/student.png" v-for="item in $root.students">           
             <img class="appreciator-img" src="img/nic.png" v-for="item in $root.teachers">
