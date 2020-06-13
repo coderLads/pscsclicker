@@ -2,8 +2,8 @@ Vue.component('click-area', {
     template: `
         <div id="click-area" :style="{backgroundImage: 'url(' + $root.locationImages[$root.locations] + ')' }">
             <img id="logo" src="img/appreciation.png" @click="handleClick('hand')">
-            <img class="appreciator-img" src="img/appreciation.png" v-for="item in $root.students">           
-            <img class="appreciator-img" src="img/appreciation.png" v-for="item in $root.teachers">
+            <img class="appreciator-img" src="img/student.png" v-for="item in $root.students">           
+            <img class="appreciator-img" src="img/nic.png" v-for="item in $root.teachers">
         </div>
     `,
     methods: {
@@ -133,12 +133,12 @@ let app = new Vue({
             }, false],
         ],
         locationImages: [
-            "http://t3.gstatic.com/images?q=tbn:ANd9GcRNrRaFFzyLYIKD-kwv71y56ibh-vHk33MIOZA5Y341RFofbu9CP2N1c6sY6LOKX4cRWYKyYfCf0WRSOwCX-ps",
-            "https://i.imgur.com/sWNhfp1.jpg",
-            "https://i.imgur.com/V7VBReW.png",
-            "https://i.imgur.com/SfoiGrH.png",
-            "https://i.imgur.com/nW1hmpt.png",
-            "https://i.imgur.com/Bi3cbWd.png"
+            "l1.jpg",
+            "l2.jpg",
+            "l3.jpg",
+            "l4.jpg",
+            "l5.jpg",
+            "l6.jpg"
         ],
         resetTime: false,
     },
